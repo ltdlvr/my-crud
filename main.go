@@ -198,5 +198,6 @@ func createTable() {
 	}
 	fmt.Println("Таблица готова")
 }
+
 // main branch
-// conflict branch
+// main branch
