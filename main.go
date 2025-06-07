@@ -16,6 +16,8 @@ import (
 	_ "github.com/lib/pq"
 )
 
+//теперь мейн с увлекательными комментариями
+
 var db *sql.DB
 
 type CreateUserRequest struct {
