@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/joho/godotenv"
@@ -22,7 +21,7 @@ func main() {
 	}
 
 	db.InitDatabase()
-	createTable()
+	// createTable()
 
 	app := fiber.New(fiber.Config{
 		ErrorHandler: func(c *fiber.Ctx, err error) error {
@@ -63,17 +62,17 @@ func setupRoutes(app *fiber.App) {
 	users.Delete("/:id", handler.DeleteUserHandler)
 }
 
-func createTable() {
-	query := `
-	CREATE TABLE IF NOT EXISTS users (
-		id SERIAL PRIMARY KEY,
-		name TEXT NOT NULL,
-		age INTEGER NOT NULL
-	)`
+// func createTable() {
+// 	query := `
+// 	CREATE TABLE IF NOT EXISTS users (
+// 		id SERIAL PRIMARY KEY,
+// 		name TEXT NOT NULL,
+// 		age INTEGER NOT NULL
+// 	)`
 
-	_, err := db.Database.Exec(query)
-	if err != nil {
-		log.Fatal("Ошибка создания таблицы: ", err)
-	}
-	fmt.Println("Таблица готова")
-}
+// 	_, err := db.Database.Exec(query)
+// 	if err != nil {
+// 		log.Fatal("Ошибка создания таблицы: ", err)
+// 	}
+// 	fmt.Println("Таблица готова")
+// }
