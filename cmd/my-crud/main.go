@@ -5,6 +5,7 @@ import (
 
 	"github.com/joho/godotenv"
 
+	"my-crud/config"
 	"my-crud/internal/db"
 	"my-crud/internal/handler"
 
@@ -19,8 +20,9 @@ func main() {
 	if err != nil {
 		log.Println("нету.env")
 	}
+	cfg := config.LoadConfig()
 
-	db.InitDatabase()
+	db.InitDatabase(cfg)
 	// createTable()
 
 	app := fiber.New(fiber.Config{

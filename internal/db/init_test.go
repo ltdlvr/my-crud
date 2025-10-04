@@ -3,6 +3,8 @@ package db
 import (
 	"testing"
 
+	"my-crud/config"
+
 	"github.com/joho/godotenv"
 )
 
@@ -11,7 +13,8 @@ func TestInitDatabase(t *testing.T) {
 	if err != nil {
 		t.Fatalf("не удалось загрузить .env.test: %v", err)
 	}
-	InitDatabase()
+	cfg := config.LoadConfig()
+	InitDatabase(cfg)
 
 	if Database == nil {
 		t.Fatal("db всё еще nil после initDatabase()")
