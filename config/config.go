@@ -4,19 +4,22 @@ import (
 	"log"
 	"os"
 
+	"github.com/go-playground/validator/v10"
 	"github.com/joho/godotenv"
 )
 
 type Config struct {
-	DBHost string
-	DBPort string
-	DBUser string
-	DBPass string
-	DBName string
+	DBHost string `validate:"required,hostname|ip"`
+	DBPort string `validate:"required,numeric"`
+	DBUser string `validate:"required"`
+	DBPass string `validate:"required"`
+	DBName string `validate:"required"`
 }
 
 func LoadConfig() *Config {
 	_ = godotenv.Load()
+
+	var validate = validator.New()
 
 	cfg := &Config{
 		DBHost: os.Getenv("DB_HOST"),
@@ -25,10 +28,12 @@ func LoadConfig() *Config {
 		DBPass: os.Getenv("DB_PASS"),
 		DBName: os.Getenv("DB_NAME"),
 	}
-
-	if cfg.DBHost == "" {
-		log.Fatal("DB_HOST is not set")
-		//Переписать через валидатор, добавить все поля
+	if err := validate.Struct(cfg); err != nil {
+		validationErrors := err.(validator.ValidationErrors)
+		for _, fieldErr := range validationErrors {
+			log.Printf("Validation error of field %s", fieldErr.Field())
+		}
+		log.Fatal("There's an error in configuration")
 	}
 
 	return cfg
