@@ -10,8 +10,9 @@ A REST API for user management built with Go, Fiber, and PostgreSQL.
 - **Docker & Docker Compose** — containerization and orchestration
 - **lib/pq** — PostgreSQL driver
 - **godotenv** — environment variables management
+- **validator** — data validation and struct field verification
 
-## 📋 Features
+## 📋 Features 
 
 - ✅ Create user (POST)
 - ✅ Get all users (GET)
@@ -82,26 +83,27 @@ curl -X DELETE http://localhost:8080/api/users/1
 
 ```
 .
-├── Dockerfile                 # Go application Docker image
-├── docker-compose.yml         # Docker Compose configuration
+├── Dockerfile                # Go application Docker image
+├── docker-compose.yml        # Docker Compose configuration
 ├── env.example               # Environment variables example
 ├── go.mod                    # Go modules
 ├── go.sum                    # Module checksums
 ├── cmd/
 │   └── my-crud/
 │       └── main.go           # Application entry point
+├── config/
+│   └── config.go             # Loads and validates environment variables
 └── internal/
     ├── db/
-    │   ├── db.go            # Database connection
-    │   ├── init.go          # Database initialization
-    │   ├── init_test.go     # Database tests
+    │   ├── db.go             # Database connection
+    │   ├── init.go           # Database initialization
+    │   ├── init_test.go      # Database tests
     │   └── migrations/
     │       └── 20250627011320_create_users_table.sql # DB migration
     ├── handler/
     │   └── user_handler.go   # HTTP handlers for user operations
-    ├── model/
-    │   └── user.go          # User data model
-    └── service/             # Business logic layer (if implemented)
+    └── model/
+        └── user.go           # User data model
 ```
 
 ## ⚙️ Environment Variables
