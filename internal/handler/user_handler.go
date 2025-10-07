@@ -17,8 +17,8 @@ var validate = validator.New()
 func GetAllUsersHandler(c *fiber.Ctx) error {
 	users, err := db.GetAllUsers(db.Database)
 	if err != nil {
-		log.Printf("Ошибка при получении всех пользователей: %v", err)
-		return c.Status(500).JSON(fiber.Map{"error": "Не удалось получить список пользователей"})
+		log.Printf("Failed to get all users: %v", err)
+		return c.Status(500).JSON(fiber.Map{"error": "Failed to get user list"})
 	}
 
 	return c.JSON(fiber.Map{
@@ -88,7 +88,7 @@ func DeleteUserHandler(c *fiber.Ctx) error {
 	}
 
 	if err := db.DeleteUser(db.Database, userID); err != nil {
-		log.Printf("Ошибка при удалении пользователя: %v", err)
+		log.Printf("Failed to delete user: %v", err)
 		return c.Status(500).JSON(fiber.Map{"error": "Failed to delete user"})
 	}
 
