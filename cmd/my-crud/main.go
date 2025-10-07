@@ -18,18 +18,17 @@ import (
 func main() {
 	err := godotenv.Load()
 	if err != nil {
-		log.Println("нету.env")
+		log.Println(".env is not set")
 	}
 	cfg := config.LoadConfig()
 
 	db.InitDatabase(cfg)
-	// createTable()
 
 	app := fiber.New(fiber.Config{
 		ErrorHandler: func(c *fiber.Ctx, err error) error {
-			log.Printf("Ошибка: %v", err)
+			log.Printf("Error: %v", err)
 			return c.Status(500).JSON(fiber.Map{
-				"error": "Внутренняя ошибка сервера",
+				"error": "Internal server error",
 			})
 		},
 	})
@@ -52,7 +51,7 @@ func main() {
 func setupRoutes(app *fiber.App) {
 
 	app.Get("/", func(c *fiber.Ctx) error {
-		return c.JSON(fiber.Map{"message": "API работает!", "status": "ok"})
+		return c.JSON(fiber.Map{"message": "API is working!", "status": "ok"})
 	})
 
 	api := app.Group("/api")
@@ -63,18 +62,3 @@ func setupRoutes(app *fiber.App) {
 	users.Put("/:id", handler.UpdateUserHandler)
 	users.Delete("/:id", handler.DeleteUserHandler)
 }
-
-// func createTable() {
-// 	query := `
-// 	CREATE TABLE IF NOT EXISTS users (
-// 		id SERIAL PRIMARY KEY,
-// 		name TEXT NOT NULL,
-// 		age INTEGER NOT NULL
-// 	)`
-
-// 	_, err := db.Database.Exec(query)
-// 	if err != nil {
-// 		log.Fatal("Ошибка создания таблицы: ", err)
-// 	}
-// 	fmt.Println("Таблица готова")
-// }

@@ -7,12 +7,12 @@ type User struct {
 }
 
 type CreateUserRequest struct {
-	Name string `json:"name"`
-	Age  int    `json:"age"`
+	Name string `json:"name" validate:"required,min=2,max=50"`
+	Age  int    `json:"age" validate:"required,gt=0,lt=120"`
 }
 
 type UpdateUserRequest struct {
-	Age int `json:"age"`
+	Age int `json:"age" validate:"required,gt=0,lt=120"`
 }
 
 type UserResponse struct {
